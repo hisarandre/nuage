@@ -1,3 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import "./assets/styles/theme.css";
+@import "./assets/styles/base.css";
+@import "./assets/styles/form.css";
+@import "./assets/styles/utilities.css";
+@import "./assets/styles/animations.css";

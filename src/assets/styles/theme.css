@@ -1,0 +1,71 @@
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-peach: var(--peach);
+  --color-sky: var(--sky);
+  --color-mint: var(--mint);
+  --color-lilac: var(--lilac);
+  --color-butter: var(--butter);
+  --color-blush: var(--blush);
+  --color-cloud: var(--cloud);
+
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 6px 20px -8px oklch(0.5 0.08 260 / 0.18), 0 2px 4px -2px oklch(0.5 0.08 260 / 0.08);
+  --shadow-float: 0 20px 40px -20px oklch(0.5 0.08 260 / 0.35), 0 8px 16px -8px oklch(0.5 0.08 260 / 0.15);
+}
+
+:root {
+  --radius: 1.25rem;
+
+  --background: oklch(0.985 0.008 90);
+  --foreground: oklch(0.28 0.05 265);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.28 0.05 265);
+
+  --primary: oklch(0.72 0.09 265);
+  --primary-foreground: oklch(0.99 0.005 90);
+
+  --secondary: oklch(0.94 0.02 60);
+  --secondary-foreground: oklch(0.28 0.05 265);
+
+  --muted: oklch(0.95 0.015 250);
+  --muted-foreground: oklch(0.5 0.04 260);
+
+  --accent: oklch(0.9 0.045 30);
+  --accent-foreground: oklch(0.28 0.05 265);
+
+  --border: oklch(0.9 0.02 260);
+  --ring: oklch(0.72 0.09 265);
+
+  --peach: oklch(0.9 0.045 30);
+  --sky:   oklch(0.9 0.028 220);
+  --cloud: oklch(0.9 0.006 90);
+  --lilac: oklch(0.86 0.045 300);
+  --mint:  oklch(0.88 0.04 160);
+  --butter:oklch(0.93 0.06 90);
+  --blush: oklch(0.86 0.055 15);
+}
