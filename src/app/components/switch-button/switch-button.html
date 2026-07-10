@@ -1,0 +1,27 @@
+<div class="relative flex bg-muted rounded-full p-1 w-full">
+
+  <div
+    class="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-full transition-transform duration-300 ease-in-out"
+    [class.translate-x-full]="active() === 'signup'"
+  ></div>
+
+  <button
+    type="button"
+    class="relative z-10 flex-1 py-2 text-sm font-medium transition-colors"
+    [class.text-foreground]="active() === 'login'"
+    [class.text-muted-foreground]="active() !== 'login'"
+    (click)="select('login')"
+  >
+    Se connecter
+  </button>
+
+  <button
+    type="button"
+    class="relative z-10 flex-1 py-2 text-sm font-medium transition-colors"
+    [class.text-foreground]="active() === 'signup'"
+    [class.text-muted-foreground]="active() !== 'signup'"
+    (click)="select('signup')"
+  >
+    S'inscrire
+  </button>
+</div>

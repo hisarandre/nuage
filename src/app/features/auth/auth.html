@@ -1,0 +1,106 @@
+<main class="flex flex-col justify-center items-center h-screen w-full">
+
+  <span class="text-7xl floaty">☁️</span>
+
+  <h1 class="text-4xl font-semibold leading-relaxed pop-in">Nuage</h1>
+  <p class="text-muted-foreground pop-in pb-8">Range tes collections, tout en douceur.</p>
+
+  <app-card class="pop-in w-md">
+
+    <app-switch-button
+      class="pb-8"
+      [(active)]="mode"
+    />
+
+    @if (mode() === "login") {
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+        <label for="email">
+          <p>Email</p>
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Ton mail"
+        />
+        @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
+          <span class="text-red-500 text-xs">Email invalide</span>
+        }
+
+        <label for="password">
+          <p>Mot de passe</p>
+        </label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+        />
+        @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+          <span class="text-red-500 text-xs">8 caractères minimum</span>
+        }
+
+        <app-button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="mt-4"
+        >
+          Envoyer
+        </app-button>
+      </form>
+    }
+
+    @if (mode() === "signup") {
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()">
+        <label for="email">
+          <p>Email</p>
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Ton mail"
+        />
+        @if (signupForm.controls.email.invalid && signupForm.controls.email.touched) {
+          <span class="text-red-500 text-xs">Email invalide</span>
+        }
+
+        <label for="username">
+          <p>Pseudo</p>
+        </label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          placeholder="Ton pseudo"
+        />
+
+        @if (signupForm.controls.username.invalid && signupForm.controls.username.touched) {
+          <span class="text-red-500 text-xs">Pseudo invalide</span>
+        }
+
+        <label for="password">
+          <p>Mot de passe</p>
+        </label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="••••••••"
+        />
+        @if (signupForm.controls.password.invalid && signupForm.controls.password.touched) {
+          <span class="text-red-500 text-xs">8 caractères minimum</span>
+        }
+
+        <app-button
+          type="submit"
+          [disabled]="signupForm.invalid"
+          class="mt-4"
+        >
+          Envoyer
+        </app-button>
+      </form>
+    }
+
+  </app-card>
+</main>
