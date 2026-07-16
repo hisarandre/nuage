@@ -1,1 +1,23 @@
-<p>dashboard works!</p>
+<app-header/>
+<main class="mx-auto max-w-5xl px-6 md:px-14">
+  <h2 class="text-4xl font-semibold leading-relaxed">
+    Tes collections
+  </h2>
+  <p class="text-muted-foreground text-sm">
+    Range tes collections par thématique — vinyles, livres, souvenirs — dans des petits dossiers.
+  </p>
+
+  <section class="grid grid-cols-4 gap-6 mt-8">
+    <app-collection-card
+
+    />
+    <app-collection-button
+      (add)="add($event)"
+    />
+  </section>
+</main>
+
+
+@if(openAddDialog){
+  <app-add-collection />
+}
