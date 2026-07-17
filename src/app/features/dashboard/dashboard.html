@@ -12,12 +12,12 @@
 
     />
     <app-collection-button
-      (add)="add($event)"
+      (add)="add()"
     />
   </section>
 </main>
 
 
 @if(openAddDialog){
-  <app-add-collection />
+  <app-add-collection (close)="close()"/>
 }
