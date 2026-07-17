@@ -3,21 +3,45 @@
   <h2 class="text-4xl font-semibold leading-relaxed">
     Tes collections
   </h2>
-  <p class="text-muted-foreground text-sm">
+  <p class="text-muted-foreground text-sm mb-8">
     Range tes collections par thématique — vinyles, livres, souvenirs — dans des petits dossiers.
   </p>
 
-  <section class="grid grid-cols-4 gap-6 mt-8">
-    <app-collection-card
+  @if (loading()) {
+    <p>Chargement...</p>
+  } @else if (collections().length === 0) {
+    <section class="mt-4 flex flex-col justify-center items-center gap-2 w-full border-2 border-border rounded-lg border-dashed p-12">
+      <div class="floaty text-5xl mb-2">🗂️</div>
+      <h3 class="text-xl">Aucune collection pour l'instant</h3>
+      <p class="text-muted-foreground text-sm mb-2">
+        Crée ta première collection pour commencer à ranger.
+      </p>
 
-    />
-    <app-collection-button
-      (add)="add()"
-    />
-  </section>
+      <app-button (click)="add()">
+        <lucide-angular [img]="Plus" [size]="16"></lucide-angular>
+        Créer une collection
+      </app-button>
+    </section>
+  } @else {
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      @for (collection of collections(); track collection.id) {
+        <app-collection-card
+          [collection]="collection"
+          (edit)="edit(collection.id)"
+          (delete)="onDelete(collection.id)"
+        />
+      }
+
+      <app-collection-button (onAdd)="add()" />
+    </section>
+  }
 </main>
 
-
-@if(openAddDialog){
-  <app-add-collection (close)="close()"/>
+@if (openAddDialog || openEditDialog) {
+  <app-add-collection
+    [collection]="selectedCollection"
+    (created)="onCollectionCreated($event)"
+    (edited)="onCollectionEdited($event)"
+    (close)="close()"
+  />
 }

@@ -117,8 +117,8 @@
       <app-button
         class="w-full"
         (click)="onCreate()"
-      >
-        {{ isEdit() ? 'Modifier' : 'Ajouter' }}
+        [disabled]="saving()">
+        {{ isEdit() ? 'Enregistrer' : 'Ajouter' }}
       </app-button>
     </div>
 

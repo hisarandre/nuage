@@ -1,5 +1,6 @@
 import { Component, computed, input, output } from '@angular/core';
 import { LucideAngularModule, Pencil, Plus, Trash2 } from 'lucide-angular';
+import { Collection } from '../../core/models/collection.type';
 
 @Component({
   selector: 'app-collection-card',
@@ -7,26 +8,28 @@ import { LucideAngularModule, Pencil, Plus, Trash2 } from 'lucide-angular';
   templateUrl: './collection-card.html',
 })
 export class CollectionCard {
-  protected readonly Plus = Plus;
   protected readonly Trash2 = Trash2;
+  protected readonly Pencil = Pencil;
 
-  title = input('');
-  icon = input('📦');
-  color = input<'peach' | 'sky' | 'cloud' | 'lilac' | 'mint' | 'butter' | 'blush'>('mint');
+  collection = input.required<Collection>();
 
   edit  = output<void>();
   delete = output<void>();
 
-  colorVar = computed(() => `var(--${this.color()})`);
+  colorVar = computed(() => `var(--${this.collection().color})`);
 
-  onEdit(event?: MouseEvent){
-    (event?.currentTarget as HTMLElement).blur();
+  onEdit(event: MouseEvent) {
+    if (event.currentTarget instanceof HTMLElement) {
+      event.currentTarget.blur();
+    }
     this.edit.emit();
   }
-  onDelete(event?: MouseEvent){
-    (event?.currentTarget as HTMLElement).blur();
+
+  onDelete(event: MouseEvent) {
+    if (event.currentTarget instanceof HTMLElement) {
+      event.currentTarget.blur();
+    }
     this.delete.emit();
   }
 
-  protected readonly Pencil = Pencil;
 }

@@ -1,17 +1,9 @@
-import { Injectable, inject } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../environment/environment';
+import { SupabaseClientService } from '../../core/services/supabase.service';
+import { inject, Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private supabase: SupabaseClient;
-
-  constructor() {
-    this.supabase = createClient(
-      environment.SUPABASE_URL,
-      environment.SUPABASE_ANON
-    );
-  }
+  private supabase = inject(SupabaseClientService).client;
 
   async signIn(email: string, password: string) {
     return await this.supabase.auth.signInWithPassword({

@@ -9,9 +9,9 @@ import { LucideAngularModule, Plus } from 'lucide-angular';
 export class CollectionButton {
   protected readonly Plus = Plus;
 
-  add = output<void>();
+  onAdd = output<void>();
 
-  onAdd(){
-    this.add.emit();
+  add(){
+    this.onAdd.emit();
   }
 }

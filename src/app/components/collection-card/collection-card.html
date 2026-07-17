@@ -1,12 +1,12 @@
 <a class="folder-card group block pt-3" [style]="'--card: ' + colorVar()">
-  <div class="flex h-36 flex-col justify-between p-4 relative">
+  <div class="flex h-36 flex-col justify-between p-5 relative">
 
     <section class="absolute right-6 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
       <button
         type="button"
         aria-label="Ajouter"
         class="text-muted-foreground flex h-6 w-6 items-center justify-center rounded-lg bg-white/80 cursor-pointer transition-transform hover:scale-105 hover:text-black"
-        (click)="onEdit()"
+        (click)="onEdit($event)"
       >
         <lucide-angular [img]="Pencil" [size]="14"></lucide-angular>
       </button>
@@ -14,13 +14,13 @@
         type="button"
         aria-label="Supprimer"
         class="text-muted-foreground flex h-6 w-6 items-center justify-center rounded-lg bg-white/80 cursor-pointer transition-transform hover:scale-105 hover:text-red-700"
-        (click)="onDelete()"
+        (click)="onDelete($event)"
       >
         <lucide-angular [img]="Trash2" [size]="14"></lucide-angular>
       </button>
     </section>
 
-    <span class="text-3xl">{{ icon() }}</span>
-    <h3 class="font-bold text-lg">{{ title() }}</h3>
+    <span class="text-3xl">{{ collection().emoji }}</span>
+    <h3 class="font-bold text-lg">{{ collection().name }}</h3>
   </div>
 </a>
