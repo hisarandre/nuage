@@ -26,7 +26,6 @@ import { Loading } from '../../components/loading/loading';
   templateUrl: './dashboard.html',
 })
 export class Dashboard implements OnInit {
-  protected readonly Plus = Plus;
 
   private toast = inject(ToastrService);
   collectionService = inject(CollectionService);

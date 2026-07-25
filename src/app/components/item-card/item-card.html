@@ -8,7 +8,7 @@
 
     <div class="min-w-0 flex-1">
       <h3 class="truncate font-bold">{{ item().title }}</h3>
-      @if (item().tags?.length) {
+      @if (item().tags.length) {
         <div class="mt-1 flex flex-wrap gap-1.5">
           @for (tag of item().tags; track tag) {
             <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-muted-foreground">
@@ -47,7 +47,7 @@
       @if (item().description) {
         <p class="text-muted-foreground text-xs">{{ item().description }}</p>
       }
-      @if (item().tags?.length) {
+      @if (item().tags.length) {
         <div class="mt-2 flex flex-wrap gap-1.5">
           @for (tag of item().tags; track tag) {
             <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-muted-foreground">
