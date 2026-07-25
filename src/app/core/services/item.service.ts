@@ -11,7 +11,7 @@ export class ItemService {
       .from('items')
       .select('*')
       .eq('collection_id', collectionId)
-      .order('created_at', { ascending: false });
+      .order('title', { ascending: true });
 
     if (error) throw error;
     return data;
@@ -64,6 +64,7 @@ export class ItemService {
   }
 
   async delete(id: string): Promise<void> {
+    console.log('delete', id);
     const item = await this.getById(id);
 
     const { error } = await this.supabase

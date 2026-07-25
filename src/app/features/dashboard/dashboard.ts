@@ -1,24 +1,39 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Header } from '../../components/header/header';
 import { CollectionCard } from '../../components/collection-card/collection-card';
 import { CollectionButton } from '../../components/collection-button/collection-button';
 import { AddCollection } from '../../components/add-collection/add-collection';
+import { ConfirmDialog } from '../../components/confirm-dialog/confirm-dialog';
 import { Collection } from '../../core/models/collection.type';
 import { CollectionService } from '../../core/services/collection.service';
 import { LucideAngularModule, Plus } from 'lucide-angular';
-import { Button } from '../../components/button/button';
+import { EmptyCreateButton } from '../../components/empty-create-button/empty-create-button';
+import { Loading } from '../../components/loading/loading';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Header, CollectionCard, CollectionButton, AddCollection, LucideAngularModule, Button],
+  imports: [
+    Header,
+    CollectionCard,
+    CollectionButton,
+    AddCollection,
+    ConfirmDialog,
+    LucideAngularModule,
+    EmptyCreateButton,
+    Loading,
+  ],
   templateUrl: './dashboard.html',
 })
 export class Dashboard implements OnInit {
   protected readonly Plus = Plus;
 
+  private toast = inject(ToastrService);
   collectionService = inject(CollectionService);
 
   selectedCollection: Collection | null = null;
+  collectionToDelete: Collection | null = null;
+
   openAddDialog = false;
   openEditDialog = false;
 
@@ -46,16 +61,27 @@ export class Dashboard implements OnInit {
   }
 
   edit(collectionId: string) {
-    this.selectedCollection = this.collections().find(c => c.id === collectionId) ?? null;
+    this.selectedCollection = this.collections().find((c) => c.id === collectionId) ?? null;
     this.openEditDialog = true;
   }
 
-  async onDelete(collectionId: string) {
+  askDelete(collectionId: string) {
+    this.collectionToDelete = this.collections().find((c) => c.id === collectionId) ?? null;
+  }
+
+  async confirmDelete() {
+    if (!this.collectionToDelete) return;
+
+    const id = this.collectionToDelete.id;
+
     try {
-      await this.collectionService.delete(collectionId);
-      this.collections.update(list => list.filter(c => c.id !== collectionId));
+      await this.collectionService.delete(id);
+      this.collections.update((list) => list.filter((c) => c.id !== id));
+      this.toast.success('Collection supprimée');
     } catch (err) {
-      // gérer l'erreur (toast, etc.)
+      this.toast.error('Erreur lors de la suppression');
+    } finally {
+      this.collectionToDelete = null;
     }
   }
 
@@ -66,12 +92,10 @@ export class Dashboard implements OnInit {
   }
 
   onCollectionCreated(collection: Collection) {
-    this.collections.update(list => [collection, ...list]);
+    this.collections.update((list) => [collection, ...list]);
   }
 
   onCollectionEdited(collection: Collection) {
-    this.collections.update(list =>
-      list.map(c => (c.id === collection.id ? collection : c))
-    );
+    this.collections.update((list) => list.map((c) => (c.id === collection.id ? collection : c)));
   }
 }

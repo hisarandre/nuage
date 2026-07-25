@@ -1,4 +1,4 @@
--- Table des éléments (les objets avec photo dans une collection)
+-- Table des éléments (les objets avec photo dans une collectionDetail)
 create table items (
                      id uuid primary key default gen_random_uuid(),
                      collection_id uuid not null references collections(id) on delete cascade,
@@ -28,5 +28,5 @@ create policy "Users can delete their own items"
   on items for delete
 using (auth.uid() = user_id);
 
--- index pour accélérer "tous les items d'une collection"
+-- index pour accélérer "tous les items d'une collectionDetail"
 create index items_collection_id_idx on items (collection_id);

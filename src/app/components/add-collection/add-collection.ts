@@ -94,8 +94,8 @@ export class AddCollection {
     } catch (err) {
       this.toast.error(
         this.isEdit()
-          ? "Erreur lors de la mise à jour de la collection"
-          : "Erreur lors de la création de la collection"
+          ? "Erreur lors de la mise à jour de la collectionDetail"
+          : "Erreur lors de la création de la collectionDetail"
       );
     } finally {
       this.saving.set(false);

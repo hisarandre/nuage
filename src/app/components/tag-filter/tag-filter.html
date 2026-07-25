@@ -1,0 +1,38 @@
+@if (tags().length > 0) {
+  <div class="mb-6 flex flex-wrap items-center gap-2">
+    <span class="text-xs font-semibold tracking-wide text-muted-foreground">FILTRER</span>
+
+    @for (t of tags(); track t.tag) {
+      <button
+        type="button"
+        (click)="toggle.emit(t.tag)"
+        class="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm transition"
+        [class.bg-primary]="isSelected(t.tag)"
+        [class.text-primary-foreground]="isSelected(t.tag)"
+        [class.bg-gray-100]="!isSelected(t.tag)"
+        [class.text-muted-foreground]="!isSelected(t.tag)"
+      >
+        {{ t.tag }}
+        <span
+          class="flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-semibold"
+          [class.text-primary]="isSelected(t.tag)"
+          [class.bg-white]="isSelected(t.tag)"
+          [class.bg-gray-200]="!isSelected(t.tag)"
+        >
+        {{ t.count }}
+        </span>
+      </button>
+    }
+
+    @if (selectedTags().length > 0) {
+      <button
+        type="button"
+        (click)="clear.emit()"
+        class="flex items-center gap-1 rounded-full px-3 py-1 text-sm text-muted-foreground hover:text-black"
+      >
+        <lucide-angular [img]="X" [size]="14"></lucide-angular>
+        Effacer
+      </button>
+    }
+  </div>
+}

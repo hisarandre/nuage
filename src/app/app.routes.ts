@@ -13,5 +13,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard)
   },
+  {
+    path: 'collection/:id',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/collectionDetail/collection-detail.component').then(m => m.CollectionDetail)
+  },
   { path: '**', redirectTo: 'login' }
 ];

@@ -1,0 +1,24 @@
+<div class="flex items-center gap-1 rounded-full bg-white p-1 shadow-soft">
+  <button
+    type="button"
+    (click)="change.emit('grid')"
+    class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition"
+    [class.bg-primary]="mode() === 'grid'"
+    [class.text-primary-foreground]="mode() === 'grid'"
+    [class.text-muted-foreground]="mode() !== 'grid'"
+  >
+    <lucide-angular [img]="LayoutGrid" [size]="14"></lucide-angular>
+    Grille
+  </button>
+  <button
+    type="button"
+    (click)="change.emit('list')"
+    class="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition"
+    [class.bg-primary]="mode() === 'list'"
+    [class.text-primary-foreground]="mode() === 'list'"
+    [class.text-muted-foreground]="mode() !== 'list'"
+  >
+    <lucide-angular [img]="List" [size]="14"></lucide-angular>
+    Liste
+  </button>
+</div>

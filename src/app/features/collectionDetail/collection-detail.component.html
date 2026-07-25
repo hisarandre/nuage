@@ -1,0 +1,115 @@
+<app-header />
+<main class="mx-auto max-w-5xl px-6 md:px-14">
+
+  <a [routerLink]="['/']" class="flex items-center gap-2 text-muted-foreground text-sm hover:text-black pop-in">
+    <lucide-angular [img]="ArrowLeft" [size]="16"></lucide-angular>
+    <p> Toutes les collections</p>
+  </a>
+
+  @if (loading()) {
+    <app-loading />
+  } @else if (collection()) {
+    <section
+      class="w-full flex items-center justify-between rounded-2xl p-5 shadow-soft my-8 pop-in"
+      [style]="cardStyle()"
+    >
+      <div class="flex items-center gap-4">
+        <div class="text-6xl">{{ collection()!.emoji }}</div>
+        <div>
+          <h2 class="text-2xl font-bold">{{ collection()!.name }}</h2>
+          <span class="text-muted-foreground text-sm">
+            {{ itemLabel() }}
+          </span>
+        </div>
+      </div>
+
+      <app-button (click)="addItem()">
+        <lucide-angular [img]="Plus" [size]="16"></lucide-angular>
+        Ajouter
+      </app-button>
+    </section>
+
+    <div class="mb-4 flex items-center gap-3">
+      <div class="relative flex-1">
+        <lucide-angular
+          [img]="Search"
+          [size]="16"
+          class="absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+        />
+        <input
+          type="text"
+          [value]="searchQuery()"
+          (input)="onSearchInput($event)"
+          placeholder="Rechercher..."
+          class="w-full rounded-full pl-12"
+        />
+      </div>
+
+      <app-view-toggle [mode]="viewMode()" (change)="viewMode.set($event)" />
+    </div>
+
+    <app-tag-filter
+      [tags]="availableTags()"
+      [selectedTags]="selectedTags()"
+      (toggle)="toggleTag($event)"
+      (clear)="clearTags()"
+    />
+
+    @if (!items() || items()!.length === 0) {
+      <app-empty-create-button
+        [buttonText]="'Ajouter un élément'"
+        [emoji]="'✨'"
+        [subText]="'Cette collection est encore vide.'"
+        (onAdd)="addItem()"
+      />
+    } @else if (filteredItems().length === 0) {
+      <p class="py-12 text-center text-muted-foreground">Aucun élément ne correspond à ta recherche.</p>
+    } @else if (viewMode() === 'grid') {
+      <section class="columns-2 md:columns-5 gap-4 mb-8">
+        @for (item of filteredItems(); track item.id) {
+          <div class="mb-4 break-inside-avoid">
+            <app-item-card
+              [item]="item"
+              layout="grid"
+              (edit)="editItem(item.id)"
+              (delete)="askDelete(item.id)"
+            />
+          </div>
+        }
+      </section>
+    } @else {
+      <section class="mb-8 flex flex-col gap-3">
+        @for (item of filteredItems(); track item.id) {
+          <app-item-card
+            [item]="item"
+            layout="list"
+            (edit)="editItem(item.id)"
+            (delete)="askDelete(item.id)"
+          />
+        }
+      </section>
+    }
+  } @else {
+    <p>Collection introuvable.</p>
+  }
+</main>
+
+
+@if (openAddItemDialog) {
+  <app-add-item
+    [collectionId]="collection()!.id"
+    [item]="selectedItem"
+    (created)="onItemCreated($event)"
+    (edited)="onItemEdited($event)"
+    (close)="closeItemDialog()"
+  />
+}
+
+@if (itemToDelete) {
+  <app-confirm-dialog
+    [title]="'Supprimer « ' + itemToDelete.title + ' » ?'"
+    message="L'élément sera supprimé et cette action est définitive."
+    (confirmed)="confirmDelete()"
+    (cancelled)="itemToDelete = null"
+  />
+}

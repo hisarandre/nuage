@@ -1,38 +1,33 @@
 <app-header/>
 <main class="mx-auto max-w-5xl px-6 md:px-14">
-  <h2 class="text-4xl font-semibold leading-relaxed">
+  <h2 class="text-4xl font-semibold leading-relaxed pop-in">
     Tes collections
   </h2>
-  <p class="text-muted-foreground text-sm mb-8">
+  <p class="text-muted-foreground text-sm mb-8 pop-in">
     Range tes collections par thématique — vinyles, livres, souvenirs — dans des petits dossiers.
   </p>
 
   @if (loading()) {
-    <p>Chargement...</p>
+    <app-loading />
   } @else if (collections().length === 0) {
-    <section class="mt-4 flex flex-col justify-center items-center gap-2 w-full border-2 border-border rounded-lg border-dashed p-12">
-      <div class="floaty text-5xl mb-2">🗂️</div>
-      <h3 class="text-xl">Aucune collection pour l'instant</h3>
-      <p class="text-muted-foreground text-sm mb-2">
-        Crée ta première collection pour commencer à ranger.
-      </p>
-
-      <app-button (click)="add()">
-        <lucide-angular [img]="Plus" [size]="16"></lucide-angular>
-        Créer une collection
-      </app-button>
-    </section>
+    <app-empty-create-button
+      [buttonText] = "'Créer une collection'"
+      [emoji]="'🗂️'"
+      [title]="'Aucune collection pour l\'instant'"
+      [subText]="'Crée ta première collection pour commencer à ranger.'"
+      (onAdd)="add()"
+    />
   } @else {
     <section class="grid grid-cols-2 md:grid-cols-4 gap-6">
       @for (collection of collections(); track collection.id) {
         <app-collection-card
           [collection]="collection"
           (edit)="edit(collection.id)"
-          (delete)="onDelete(collection.id)"
+          (delete)="askDelete(collection.id)"
         />
       }
 
-      <app-collection-button (onAdd)="add()" />
+      <app-collection-button (onAdd)="add()"></app-collection-button>
     </section>
   }
 </main>
@@ -43,5 +38,14 @@
     (created)="onCollectionCreated($event)"
     (edited)="onCollectionEdited($event)"
     (close)="close()"
+  />
+}
+
+@if (collectionToDelete) {
+  <app-confirm-dialog
+    [title]="'Supprimer « ' + collectionToDelete.name + ' » ?'"
+    message="Tous les éléments à l'intérieur seront supprimés. Cette action est définitive."
+    (confirmed)="confirmDelete()"
+    (cancelled)="collectionToDelete = null"
   />
 }

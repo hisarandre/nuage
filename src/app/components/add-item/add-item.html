@@ -1,0 +1,148 @@
+<div class="fixed inset-0 z-40 bg-black/80" (click)="onClose()"></div>
+
+<dialog
+  open
+  class="fixed left-1/2 top-1/2 z-50 m-0 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl
+  bg-background shadow-xl max-h-[90vh] overflow-hidden"
+>
+  <div
+    class="max-h-[90vh] overflow-y-auto p-8 scrollbar-none"
+    (click)="$event.stopPropagation()"
+  >
+
+    <header class="mb-6 flex items-center justify-between">
+      <h2 class="text-2xl font-bold">
+        {{ isEdit() ? "Modifier l'élément" : 'Nouvel élément' }}
+      </h2>
+
+      <button
+        type="button"
+        aria-label="Fermer"
+        (click)="onClose()"
+        [disabled]="saving()"
+        class="cursor-pointer rounded-full p-2 w-8 h-8 flex justify-center items-center hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        ✕
+      </button>
+    </header>
+
+    <!-- Image -->
+    <div class="mb-6">
+      @if (compressing()) {
+        <div class="flex h-64 w-full items-center justify-center rounded-2xl border-2 border-dashed border-border bg-gray-50">
+          <span class="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent"></span>
+        </div>
+      } @else if (imagePreview()) {
+        <div class="relative">
+          <img
+            [src]="imagePreview()"
+            alt=""
+            class="h-64 w-full rounded-2xl object-cover"
+          />
+          <button
+            type="button"
+            aria-label="Retirer l'image"
+            (click)="removeImage()"
+            [disabled]="saving()"
+            class="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 hover:bg-red-700 hover:text-white cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <lucide-angular [img]="X" [size]="16"></lucide-angular>
+          </button>
+        </div>
+      } @else {
+        <label
+          class="flex h-64 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-border bg-gray-50 text-muted-foreground hover:bg-primary/10"
+          [class.pointer-events-none]="saving()"
+          [class.opacity-50]="saving()"
+        >
+          <lucide-angular [img]="ImagePlus" [size]="28"></lucide-angular>
+          <span class="text-sm">Ajouter une image</span>
+          <input
+            type="file"
+            accept="image/*"
+            class="hidden"
+            [disabled]="saving()"
+            (change)="onFileSelected($event)"
+          />
+        </label>
+      }
+    </div>
+
+    <!-- Titre -->
+    <div class="mb-6">
+      <label for="title" class="mb-1 text-sm font-medium">Titre</label>
+      <input
+        id="title"
+        type="text"
+        [(ngModel)]="title"
+        [disabled]="saving()"
+        placeholder="ex: Kind of Blue"
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="mb-6">
+      <label for="description" class="mb-1 text-sm font-medium">Description (optionnelle)</label>
+      <textarea
+        id="description"
+        rows="3"
+        [(ngModel)]="description"
+        [disabled]="saving()"
+        class="w-full resize-none"
+      ></textarea>
+    </div>
+
+    <!-- Tags -->
+    <div class="mb-8">
+      <label for="tags" class="mb-1 text-sm font-medium">Tags</label>
+      <input
+        id="tags"
+        type="text"
+        [(ngModel)]="tagInput"
+        [disabled]="saving()"
+        (keydown)="onTagInputKeydown($event)"
+        (blur)="addTag()"
+        placeholder="ex: série 1, auteur..."
+      />
+      <p class="mt-1 text-xs text-muted-foreground">Entrée ou virgule pour ajouter</p>
+
+      @if (tags().length > 0) {
+        <div class="mt-2 flex flex-wrap gap-2">
+          @for (tag of tags(); track tag) {
+            <span class="flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm">
+              {{ tag }}
+              <button
+                type="button"
+                [attr.aria-label]="'Retirer ' + tag"
+                (click)="removeTag(tag)"
+                [disabled]="saving()"
+                class="cursor-pointer text-muted-foreground hover:text-black disabled:cursor-not-allowed"
+              >
+                <lucide-angular [img]="X" [size]="12"></lucide-angular>
+              </button>
+            </span>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Actions -->
+    <div class="flex gap-3">
+      <app-button class="w-full" variant="outline" (click)="onClose()" [disabled]="saving()">
+        Annuler
+      </app-button>
+
+      <app-button class="w-full" (click)="onCreate()" [disabled]="saving() || compressing()">
+        @if (saving()) {
+          <span class="inline-flex items-center gap-2">
+            <span class="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+            {{ isEdit() ? 'Enregistrement...' : 'Ajout...' }}
+          </span>
+        } @else {
+          {{ isEdit() ? 'Enregistrer' : 'Ajouter' }}
+        }
+      </app-button>
+    </div>
+
+  </div>
+</dialog>

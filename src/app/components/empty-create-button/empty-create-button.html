@@ -1,0 +1,12 @@
+<section class="mt-4 flex flex-col justify-center items-center gap-2 w-full border-2 border-border rounded-lg border-dashed p-12 pop-in">
+  <div class="floaty text-5xl mb-2">{{ emoji() }}</div>
+  <h3 class="text-xl">{{ title() }}</h3>
+  <p class="text-muted-foreground text-sm mb-2">
+    {{ subText() }}
+  </p>
+
+  <app-button (click)="add()">
+    <lucide-angular [img]="Plus" [size]="16"></lucide-angular>
+    {{ buttonText() }}
+  </app-button>
+</section>

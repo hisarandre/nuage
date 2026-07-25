@@ -1,35 +1,26 @@
 import { Component, computed, input, output } from '@angular/core';
-import { LucideAngularModule, Pencil, Plus, Trash2 } from 'lucide-angular';
 import { Collection } from '../../core/models/collection.type';
+import { RouterLink } from '@angular/router';
+import { EditDeleteButton } from '../edit-delete-button/edit-delete-button';
 
 @Component({
   selector: 'app-collection-card',
-  imports: [LucideAngularModule],
+  imports: [RouterLink, EditDeleteButton],
   templateUrl: './collection-card.html',
 })
 export class CollectionCard {
-  protected readonly Trash2 = Trash2;
-  protected readonly Pencil = Pencil;
-
   collection = input.required<Collection>();
 
-  edit  = output<void>();
-  delete = output<void>();
+  edit = output<string>();
+  delete = output<string>();
 
   colorVar = computed(() => `var(--${this.collection().color})`);
 
-  onEdit(event: MouseEvent) {
-    if (event.currentTarget instanceof HTMLElement) {
-      event.currentTarget.blur();
-    }
-    this.edit.emit();
+  onEdit(){
+    this.edit.emit(this.collection().id)
   }
 
-  onDelete(event: MouseEvent) {
-    if (event.currentTarget instanceof HTMLElement) {
-      event.currentTarget.blur();
-    }
-    this.delete.emit();
+  onDelete(){
+    this.delete.emit(this.collection().id)
   }
-
 }

@@ -10,7 +10,7 @@ export class CollectionService {
     const { data, error } = await this.supabase
       .from('collections')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('name', { ascending: true });
 
     if (error) throw error;
     return data;
@@ -51,11 +51,41 @@ export class CollectionService {
   }
 
   async delete(id: string): Promise<void> {
+    await this.deleteCollectionImages(id);
+
     const { error } = await this.supabase
       .from('collections')
       .delete()
       .eq('id', id);
 
     if (error) throw error;
+  }
+
+  private async deleteCollectionImages(collectionId: string): Promise<void> {
+    const { data: items, error } = await this.supabase
+      .from('items')
+      .select('image_url')
+      .eq('collection_id', collectionId);
+
+    if (error) throw error;
+
+    const paths = (items ?? [])
+      .map(item => item.image_url)
+      .filter((url): url is string => !!url)
+      .map(url => this.extractStoragePath(url))
+      .filter((path): path is string => !!path);
+
+    if (paths.length === 0) return;
+
+    const { error: storageError } = await this.supabase.storage
+      .from('items')
+      .remove(paths);
+
+    if (storageError) throw storageError;
+  }
+
+  private extractStoragePath(imageUrl: string): string | null {
+    const path = imageUrl.split('/items/')[1];
+    return path ?? null;
   }
 }

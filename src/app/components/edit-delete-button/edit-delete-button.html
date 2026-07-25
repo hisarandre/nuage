@@ -1,0 +1,27 @@
+<section
+  class="flex gap-1 z-10 transition-opacity"
+  [class.absolute]="floating()"
+  [class.top-4]="floating()"
+  [class.right-4]="floating()"
+  [class.opacity-0]="floating()"
+  [class.group-hover:opacity-100]="floating()"
+  [class.group-focus-within:opacity-100]="floating()"
+  [class.opacity-100]="!floating()"
+>
+  <button
+    type="button"
+    aria-label="Modifier"
+    class="text-muted-foreground flex h-6 w-6 items-center justify-center rounded-lg bg-white/80 cursor-pointer transition-transform hover:scale-105 hover:text-black"
+    (click)="onEdit($event)"
+  >
+    <lucide-angular [img]="Pencil" [size]="14"></lucide-angular>
+  </button>
+  <button
+    type="button"
+    aria-label="Supprimer"
+    class="text-muted-foreground flex h-6 w-6 items-center justify-center rounded-lg bg-white/80 cursor-pointer transition-transform hover:scale-105 hover:text-red-700"
+    (click)="onDelete($event)"
+  >
+    <lucide-angular [img]="Trash2" [size]="14"></lucide-angular>
+  </button>
+</section>
