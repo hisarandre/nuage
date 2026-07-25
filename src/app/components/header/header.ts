@@ -15,8 +15,8 @@ export class Header {
   private router = inject(Router);
   private toast = inject(ToastrService);
 
-  logOut() {
-    this.auhtService.signOut()
+  async logOut() {
+    await this.auhtService.signOut();
     this.router.navigateByUrl('/login');
   }
 
