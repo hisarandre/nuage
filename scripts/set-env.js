@@ -1,6 +1,10 @@
+// scripts/set-env.js
 const fs = require('fs');
 
 const targetPath = './src/environment/environment.ts';
+
+console.log('SUPABASE_URL brut:', JSON.stringify(process.env['SUPABASE_URL']));
+console.log('SUPABASE_ANON brut:', JSON.stringify(process.env['SUPABASE_ANON']));
 
 const envFileContent = `export const environment = {
   production: true,
