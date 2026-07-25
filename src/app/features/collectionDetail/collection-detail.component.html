@@ -71,6 +71,8 @@
             <app-item-card
               [item]="item"
               layout="grid"
+              [collectionColor]="collection()!.color"
+              [collectionEmoji]="collection()!.emoji"
               (edit)="editItem(item.id)"
               (delete)="askDelete(item.id)"
             />
@@ -83,6 +85,8 @@
           <app-item-card
             [item]="item"
             layout="list"
+            [collectionColor]="collection()!.color"
+            [collectionEmoji]="collection()!.emoji"
             (edit)="editItem(item.id)"
             (delete)="askDelete(item.id)"
           />

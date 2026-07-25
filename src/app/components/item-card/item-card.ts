@@ -12,10 +12,18 @@ import { Collection } from '../../core/models/collection.type';
 export class ItemCard {
   item = input.required<Item>();
   layout = input<'grid' | 'list'>('grid');
+  collectionColor = input<string>('cloud');
+  collectionEmoji = input<string>('📦');
 
-  isList = computed(() => this.layout() === 'list');
   edit = output<string>();
   delete = output<string>();
+
+  isList = computed(() => this.layout() === 'list');
+  hasImage = computed(() => !!this.item().image_url);
+
+  placeholderStyle = computed(() => ({
+    background: `var(--${this.collectionColor()})`,
+  }));
 
   onEdit(){
     this.edit.emit(this.item().id)

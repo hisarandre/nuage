@@ -1,14 +1,23 @@
 @if (isList()) {
   <article class="group flex items-center gap-4 rounded-xl bg-white p-3 shadow-soft">
-    <img
-      [src]="item().image_url"
-      [alt]="item().title"
-      class="h-14 w-14 shrink-0 rounded-lg object-cover"
-    />
+    @if (hasImage()) {
+      <img
+        [src]="item().image_url"
+        [alt]="item().title"
+        class="h-14 w-14 shrink-0 rounded-lg object-cover"
+      />
+    } @else {
+      <div
+        class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg text-2xl"
+        [style]="placeholderStyle()"
+      >
+        {{ collectionEmoji() }}
+      </div>
+    }
 
     <div class="min-w-0 flex-1">
       <h3 class="truncate font-bold">{{ item().title }}</h3>
-      @if (item().tags.length) {
+      @if (item().tags?.length) {
         <div class="mt-1 flex flex-wrap gap-1.5">
           @for (tag of item().tags; track tag) {
             <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-muted-foreground">
@@ -29,11 +38,20 @@
 } @else {
   <article class="group relative overflow-hidden rounded-xl bg-white shadow-soft transition-all hover:-translate-y-1 hover:shadow-float">
     <div class="overflow-hidden">
-      <img
-        [src]="item().image_url"
-        [alt]="item().title"
-        class="w-full object-cover transition-transform duration-300 group-hover:scale-105 h-46"
-      />
+      @if (hasImage()) {
+        <img
+          [src]="item().image_url"
+          [alt]="item().title"
+          class="h-46 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+      } @else {
+        <div
+          class="flex h-46 w-full items-center justify-center text-6xl"
+          [style]="placeholderStyle()"
+        >
+          {{ collectionEmoji() }}
+        </div>
+      }
     </div>
 
     <app-edit-delete-button
@@ -47,7 +65,7 @@
       @if (item().description) {
         <p class="text-muted-foreground text-xs">{{ item().description }}</p>
       }
-      @if (item().tags.length) {
+      @if (item().tags?.length) {
         <div class="mt-2 flex flex-wrap gap-1.5">
           @for (tag of item().tags; track tag) {
             <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-muted-foreground">
