@@ -23,10 +23,17 @@
         </div>
       </div>
 
-      <app-button (click)="addItem()">
-        <lucide-angular [img]="Plus" [size]="16"></lucide-angular>
-        Ajouter
-      </app-button>
+      @if (isMobile()) {
+        <app-button (click)="addItem()">
+          <lucide-angular [img]="Plus" [size]="16"></lucide-angular>
+        </app-button>
+      } @else {
+        <app-button (click)="addItem()">
+          <lucide-angular [img]="Plus" [size]="16"></lucide-angular>
+          Ajouter
+        </app-button>
+      }
+
     </section>
 
     <div class="mb-4 flex items-center gap-3">

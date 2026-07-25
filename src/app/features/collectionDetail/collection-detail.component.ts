@@ -15,6 +15,7 @@ import { ConfirmDialog } from '../../components/confirm-dialog/confirm-dialog';
 import { Loading } from '../../components/loading/loading';
 import { TagFilter, TagCount } from '../../components/tag-filter/tag-filter';
 import { ViewToggle, ViewMode } from '../../components/view-toggle/view-toggle';
+import { ViewportService } from '../../core/services/viewport.service';
 
 @Component({
   selector: 'app-collectionDetail',
@@ -42,10 +43,12 @@ export class CollectionDetail implements OnInit {
   private toast = inject(ToastrService);
   private collectionService = inject(CollectionService);
   private itemService = inject(ItemService);
+  private viewportService = inject(ViewportService);
 
   collection = signal<Collection | null>(null);
   items = signal<Item[] | null>(null);
   loading = signal(false);
+  isMobile = this.viewportService.isMobile;
 
   openAddItemDialog = false;
   selectedItem: Item | null = null;

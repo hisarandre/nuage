@@ -4,6 +4,7 @@ import { LucideAngularModule, LogOut } from 'lucide-angular';
 import { AuthService } from '../../features/auth/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ViewportService } from '../../core/services/viewport.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,9 @@ export class Header {
   private auhtService = inject(AuthService)
   private router = inject(Router);
   private toast = inject(ToastrService);
+  private viewportService = inject(ViewportService)
+
+  isMobile = this.viewportService.isMobile;
 
   async logOut() {
     await this.auhtService.signOut();

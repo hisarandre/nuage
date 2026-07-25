@@ -4,11 +4,21 @@
     <h1 class="text-2xl font-semibold leading-relaxed">Nuage</h1>
   </div>
 
-  <app-button
-    variant="outline"
-    (click)="logOut()"
-  >
-    <lucide-angular [img]="LogOut" [size]="16"></lucide-angular>
-    Se déconnecter
-  </app-button>
+  @if(isMobile()){
+    <app-button
+      variant="outline"
+      (click)="logOut()"
+    >
+      <lucide-angular [img]="LogOut" [size]="16"></lucide-angular>
+    </app-button>
+  }@else {
+    <app-button
+      variant="outline"
+      (click)="logOut()"
+    >
+      <lucide-angular [img]="LogOut" [size]="16"></lucide-angular>
+      Se déconnecter
+    </app-button>
+  }
+
 </header>

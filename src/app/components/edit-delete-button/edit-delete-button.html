@@ -3,10 +3,10 @@
   [class.absolute]="floating()"
   [class.top-4]="floating()"
   [class.right-4]="floating()"
-  [class.opacity-0]="floating()"
-  [class.group-hover:opacity-100]="floating()"
-  [class.group-focus-within:opacity-100]="floating()"
-  [class.opacity-100]="!floating()"
+  [class.opacity-0]="floating() && !isMobile()"
+  [class.group-hover:opacity-100]="floating() && !isMobile()"
+  [class.group-focus-within:opacity-100]="floating() && !isMobile()"
+  [class.opacity-100]="!floating() || isMobile()"
 >
   <button
     type="button"
